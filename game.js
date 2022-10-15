@@ -7,6 +7,7 @@ const btnUp = document.querySelector('#up');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+const spanLives = document.querySelector('#lives');
 
 let canvasSize;
 let elementsSize;
@@ -30,9 +31,9 @@ window.addEventListener('resize', setCanvasSize);
 
 function setCanvasSize() {
     if (window.innerHeight > window.innerWidth) {
-        canvasSize = window.innerWidth * 0.9;
+        canvasSize = window.innerWidth * 0.8;
     } else {
-        canvasSize = window.innerHeight * 0.9;
+        canvasSize = window.innerHeight * 0.8;
     }
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
@@ -54,6 +55,8 @@ function startGame() {
     const mapRows = map.trim().split('\n');
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     console.log({map, mapRows, mapRowCols});
+
+    showLives();
 
     enemyPositions = [];
     game.clearRect(0,0, canvasSize, canvasSize);
@@ -122,6 +125,8 @@ function levelFail() {
 
     lives--;
 
+   
+
     console.log(lives);
     if (lives <= 0) {
         level = 0;
@@ -136,6 +141,13 @@ function levelFail() {
 
 function gameWin() {
    console.log('terminaste el juego') 
+}
+
+function showLives() {
+    const heartArrays = Array(lives).fill(emojis['HEART']);
+    // console.log(heartArrays);
+    spanLives.innerHTML = "";
+    heartArrays.forEach(heart => spanLives.append(heart));
 }
 
 btnUp.addEventListener('click', moveUp);
